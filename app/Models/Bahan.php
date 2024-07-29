@@ -15,6 +15,7 @@ class Bahan extends Model
         'quantity',
         'unit',
         'resep_id',
+        'position'
     ];
 
     public function resep()

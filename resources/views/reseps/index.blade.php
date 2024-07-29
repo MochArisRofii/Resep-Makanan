@@ -7,7 +7,7 @@
     @vite('resources/css/app.css')
     <style>
         .typing-animation {
-            border-right: .15em solid orange;
+            /* border-right: .15em solid orange; */
             white-space: nowrap;
             overflow: hidden;
             animation: typing steps(40, end), blink-caret .75s step-end infinite;
@@ -20,7 +20,12 @@
 
         @keyframes blink-caret {
             from, to { border-color: transparent }
-            50% { border-color: orange; }
+            50% { border-color: rgb(255, 255, 255); }
+        }
+
+        /* Drag and drop styles */
+        .draggable {
+            cursor: move;
         }
     </style>
 </head>
@@ -40,9 +45,9 @@
     <div class="container mx-auto p-6">
         <h1 id="judul-resep" class="text-4xl font-bold mb-8 text-center"></h1>
 
-        <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <ul id="recipe-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @foreach ($reseps as $resep)
-                <li class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-105">
+                <li id="item-{{ $resep->id }}" class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-105 draggable" draggable="true" ondragstart="drag(event)">
                     @if($resep->photo)
                         <a href="{{ route('reseps.show', $resep->id) }}">
                             <img src="{{ asset('storage/' . $resep->photo) }}" alt="{{ $resep->name }}" class="w-full h-48 object-cover cursor-pointer">
@@ -80,6 +85,28 @@
         }
 
         window.onload = typeWriter;
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const draggedElement = document.getElementById(data);
+            const target = ev.target.closest("li");
+
+            if (target && draggedElement !== target) {
+                target.parentNode.insertBefore(draggedElement, target.nextSibling);
+            }
+        }
+
+        document.getElementById('recipe-list').addEventListener('dragover', allowDrop);
+        document.getElementById('recipe-list').addEventListener('drop', drop);
     </script>
 </body>
 </html>

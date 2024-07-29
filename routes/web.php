@@ -34,3 +34,5 @@ Route::get('bahans/{resep}', [ResepController::class, 'show'])->name('reseps.sho
 Route::resource('bahans', BahanController::class);
 Route::get('bahans/create/{resep_id}', [BahanController::class, 'create'])->name('bahans.create');
 Route::post('bahans', [BahanController::class, 'store'])->name('bahans.store');
+
+Route::post('/bahans/update-position', [BahanController::class, 'updatePosition'])->name('bahans.updatePosition');

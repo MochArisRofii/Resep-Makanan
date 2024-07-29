@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bahan;
 use App\Models\Resep;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -58,7 +59,7 @@ class ResepController extends Controller
     public function show($id)
     {
         $resep = Resep::findOrFail($id);
-        $bahans = $resep->bahans; // Mengambil semua bahan terkait dengan resep
+        $bahans = Bahan::where('resep_id', $id)->orderBy('position')->get();
         return view('reseps.show', compact('resep', 'bahans'));
     }
 

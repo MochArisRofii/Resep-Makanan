@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bahan;
 use App\Models\Resep;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BahanController extends Controller
 {
@@ -24,7 +25,7 @@ class BahanController extends Controller
 
         return view('bahans.create', compact('resep'));
     }
-    
+
     // Menyimpan bahan baru
     public function store(Request $request)
     {
@@ -84,5 +85,36 @@ class BahanController extends Controller
 
         // Meredirect ke Halaman Resep.Show setelah Menghapus Suatu Bahan
         return redirect()->route('reseps.show', $resepId)->with('success', 'Bahan deleted successfully.');
+    }
+
+    public function updatePosition(Request $request)
+    {
+        $positions = $request->input('positions');
+
+        // Validasi format data
+        if (!is_array($positions)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid data format']);
+        }
+
+        try {
+            // Mulai transaksi untuk memastikan konsistensi data
+            DB::transaction(function () use ($positions) {
+                foreach ($positions as $index => $id) {
+                    $bahan = Bahan::find($id);
+                    if ($bahan) {
+                        $bahan->position = $index;
+                        $bahan->save();
+                    } else {
+                        // Jika data tidak ditemukan, bisa menambahkan log atau menangani kasus ini sesuai kebutuhan
+                        throw new \Exception("Bahan with ID $id not found");
+                    }
+                }
+            });
+
+            return response()->json(['status' => 'success']);
+        } catch (\Exception $e) {
+            // Tangani pengecualian dan kirim respons dengan pesan kesalahan
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
     }
 }
