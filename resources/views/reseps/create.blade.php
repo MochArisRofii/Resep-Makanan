@@ -48,6 +48,8 @@
 
         <a href="{{ route('home') }}" class="block text-center text-blue-500 mt-4 hover:underline">Kembali ke Halaman Utama</a>
     </div>
+
+    @vite('resources/js/app.js')
 </body>
 
 </html>

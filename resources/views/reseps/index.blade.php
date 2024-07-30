@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,13 +15,25 @@
         }
 
         @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
         }
 
         @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: rgb(255, 255, 255); }
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: rgb(255, 255, 255);
+            }
         }
 
         /* Drag and drop styles */
@@ -29,6 +42,7 @@
         }
     </style>
 </head>
+
 <body class="bg-gray-100 text-gray-900">
 
     <!-- Navbar -->
@@ -36,7 +50,9 @@
         <div class="container mx-auto flex justify-between items-center">
             <a href="#" class="text-2xl font-bold">Masakan</a>
             <div>
-                <a href="{{ route('reseps.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition">Tambah Resep Baru</a>
+                <a href="{{ route('reseps.create') }}"
+                    class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition">Tambah Resep
+                    Baru</a>
             </div>
         </div>
     </nav>
@@ -47,20 +63,26 @@
 
         <ul id="recipe-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @foreach ($reseps as $resep)
-                <li id="item-{{ $resep->id }}" class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-105 draggable" draggable="true" ondragstart="drag(event)">
-                    @if($resep->photo)
+                <li id="item-{{ $resep->id }}"
+                    class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-105 draggable"
+                    draggable="true" ondragstart="drag(event)">
+                    @if ($resep->photo)
                         <a href="{{ route('reseps.show', $resep->id) }}">
-                            <img src="{{ asset('storage/' . $resep->photo) }}" alt="{{ $resep->name }}" class="w-full h-48 object-cover cursor-pointer">
+                            <img src="{{ asset('storage/' . $resep->photo) }}" alt="{{ $resep->name }}"
+                                class="w-full h-48 object-cover cursor-pointer">
                         </a>
                     @endif
                     <div class="p-4">
                         <p class="text-lg font-semibold">{{ $resep->name }}</p>
                         <div class="mt-4 flex justify-between space-x-2">
-                            <a href="{{ route('reseps.edit', $resep->id) }}" class="bg-yellow-500 text-white px-3 py-1 rounded-lg shadow hover:bg-yellow-600 transition">Ubah</a>
+                            <a href="{{ route('reseps.edit', $resep->id) }}"
+                                class="bg-yellow-500 text-white px-3 py-1 rounded-lg shadow hover:bg-yellow-600 transition">Ubah</a>
                             <form action="{{ route('reseps.destroy', $resep->id) }}" method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded-lg shadow hover:bg-red-600 transition" onclick="return confirm('Apakah Anda yakin ingin menghapus resep ini?')">Hapus</button>
+                                <button type="submit"
+                                    class="bg-red-500 text-white px-3 py-1 rounded-lg shadow hover:bg-red-600 transition"
+                                    onclick="return confirm('Apakah Anda yakin ingin menghapus resep ini?')">Hapus</button>
                             </form>
                         </div>
                     </div>
@@ -68,6 +90,17 @@
             @endforeach
         </ul>
     </div>
+
+    <!-- Toastr Notifications -->
+    @if (session('success'))
+        <script>
+            window.onload = function() {
+                toastr.success("{{ session('success') }}");
+            };
+        </script>
+    @endif
+
+    @vite('resources/js/app.js')
 
     <script>
         const title = 'Daftar Resep Masakan';
@@ -109,4 +142,5 @@
         document.getElementById('recipe-list').addEventListener('drop', drop);
     </script>
 </body>
+
 </html>

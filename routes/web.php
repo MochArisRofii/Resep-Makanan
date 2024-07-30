@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
+// Route::get('/co', function () {
+//     notify()->success('Laravel Notify is awesome!');
 //     return view('welcome');
 // });
 
@@ -41,3 +42,4 @@ Route::post('bahans', [BahanController::class, 'store'])->name('bahans.store');
 // Endpoint ini biasanya digunakan untuk memperbarui posisi bahan (misalnya, urutan atau posisi bahan dalam resep) di database.
 
 Route::post('/bahans/update-position', [BahanController::class, 'updatePosition'])->name('bahans.updatePosition');
+
