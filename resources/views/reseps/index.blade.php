@@ -8,7 +8,6 @@
     @vite('resources/css/app.css')
     <style>
         .typing-animation {
-            /* border-right: .15em solid orange; */
             white-space: nowrap;
             overflow: hidden;
             animation: typing steps(40, end), blink-caret .75s step-end infinite;
@@ -16,11 +15,11 @@
 
         @keyframes typing {
             from {
-                width: 0
+                width: 0;
             }
 
             to {
-                width: 100%
+                width: 100%;
             }
         }
 
@@ -28,7 +27,7 @@
 
             from,
             to {
-                border-color: transparent
+                border-color: transparent;
             }
 
             50% {
@@ -51,8 +50,8 @@
             <a href="#" class="text-2xl font-bold">Masakan</a>
             <div>
                 <a href="{{ route('reseps.create') }}"
-                    class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition">Tambah Resep
-                    Baru</a>
+                    class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition ease-in-out duration-300">Tambah
+                    Resep Baru</a>
             </div>
         </div>
     </nav>
@@ -61,7 +60,7 @@
     <div class="container mx-auto p-6">
         <h1 id="judul-resep" class="text-4xl font-bold mb-8 text-center"></h1>
 
-        <ul id="recipe-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <ul id="recipe-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             @foreach ($reseps as $resep)
                 <li id="item-{{ $resep->id }}"
                     class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-105 draggable"
@@ -69,8 +68,12 @@
                     @if ($resep->photo)
                         <a href="{{ route('reseps.show', $resep->id) }}">
                             <img src="{{ asset('storage/' . $resep->photo) }}" alt="{{ $resep->name }}"
-                                class="w-full h-48 object-cover cursor-pointer">
+                                class="w-ful h-48 object-cover cursor-pointer transition-opacity duration-300 hover:opacity-75">
                         </a>
+                    @else
+                        <div class="w-full h-48 bg-gray-300 flex items-center justify-center">
+                            <span class="text-gray-500">No Image</span>
+                        </div>
                     @endif
                     <div class="p-4">
                         <p class="text-lg font-semibold">{{ $resep->name }}</p>
@@ -91,21 +94,10 @@
         </ul>
     </div>
 
-    <!-- Toastr Notifications -->
-    @if (session('success'))
-        <script>
-            window.onload = function() {
-                toastr.success("{{ session('success') }}");
-            };
-        </script>
-    @endif
-
-    @vite('resources/js/app.js')
-
     <script>
         const title = 'Daftar Resep Masakan';
         let i = 0;
-        const speed = 100; // Kecepatan animasi dalam milidetik
+        const speed = 100;
 
         function typeWriter() {
             if (i < title.length) {
