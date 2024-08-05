@@ -24,7 +24,6 @@
         }
 
         @keyframes blink-caret {
-
             from,
             to {
                 border-color: transparent;
@@ -35,9 +34,13 @@
             }
         }
 
-        /* Drag and drop styles */
-        .draggable {
-            cursor: move;
+        .dragging {
+            opacity: 0.5;
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        .dropzone-hover {
+            background-color: #f0f0f0;
         }
     </style>
 </head>
@@ -64,11 +67,11 @@
             @foreach ($reseps as $resep)
                 <li id="item-{{ $resep->id }}"
                     class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-105 draggable"
-                    draggable="true" ondragstart="drag(event)">
+                    draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">
                     @if ($resep->photo)
                         <a href="{{ route('reseps.show', $resep->id) }}">
                             <img src="{{ asset('storage/' . $resep->photo) }}" alt="{{ $resep->name }}"
-                                class="w-ful h-48 object-cover cursor-pointer transition-opacity duration-300 hover:opacity-75">
+                                class="w-full h-48 object-cover cursor-pointer transition-opacity duration-300 hover:opacity-75">
                         </a>
                     @else
                         <div class="w-full h-48 bg-gray-300 flex items-center justify-center">
@@ -113,6 +116,11 @@
 
         function drag(ev) {
             ev.dataTransfer.setData("text", ev.target.id);
+            ev.target.classList.add("dragging");
+        }
+
+        function dragEnd(ev) {
+            ev.target.classList.remove("dragging");
         }
 
         function allowDrop(ev) {
@@ -132,6 +140,21 @@
 
         document.getElementById('recipe-list').addEventListener('dragover', allowDrop);
         document.getElementById('recipe-list').addEventListener('drop', drop);
+
+        // Adding dropzone hover effect
+        document.getElementById('recipe-list').addEventListener('dragenter', function (ev) {
+            const target = ev.target.closest("li");
+            if (target) {
+                target.classList.add("dropzone-hover");
+            }
+        });
+
+        document.getElementById('recipe-list').addEventListener('dragleave', function (ev) {
+            const target = ev.target.closest("li");
+            if (target) {
+                target.classList.remove("dropzone-hover");
+            }
+        });
     </script>
 </body>
 
