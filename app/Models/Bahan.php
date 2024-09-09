@@ -20,6 +20,8 @@ class Bahan extends Model
 
     public function resep()
     {
+        // Bahan "dimiliki oleh" satu Resep
+        // Menghubungkan kolom 'resep_id' di tabel 'bahans' dengan kolom 'id' di tabel 'reseps'
         return $this->belongsTo(Resep::class);
     }
 }
