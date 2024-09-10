@@ -16,7 +16,6 @@ class ResepController extends Controller
     {
         // Mengambil semua data dari model Resep dan menyimpannya dalam variabel $reseps
         $reseps = Resep::all();
-
         // Mengembalikan view 'reseps.index' dengan data $reseps yang sudah diambil
         return view('reseps.index', compact('reseps'));
     }
@@ -27,6 +26,7 @@ class ResepController extends Controller
      */
     public function create()
     {
+        // Mengembalikan Ke View reseps.create
         return view('reseps.create');
     }
 
@@ -39,7 +39,9 @@ class ResepController extends Controller
         $request->validate([
             'name' => 'required', // Field 'name' harus diisi
             'deskripsi' => 'nullable', // Field 'deskripsi' boleh kosong
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validasi file foto (boleh kosong, harus gambar, format jpeg, png, jpg, ukuran maksimal 2MB)
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validasi file foto 
+                                                                    //(boleh kosong, harus gambar, format jpeg, png, jpg, 
+                                                                    // ukuran maksimal 2MB)
         ]);
 
         $photoPath = null; // Inisialisasi variabel untuk menyimpan path foto

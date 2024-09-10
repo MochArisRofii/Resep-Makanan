@@ -29,7 +29,7 @@
 
             <div class="form-group mb-4">
                 <label for="deskripsi" class="block text-gray-700">Deskripsi:</label>
-                <textarea id="deskripsi" name="deskripsi" class="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>{{ old('deskripsi') }}</textarea>
+                <textarea id="deskripsi" name="deskripsi" class="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" >{{ old('deskripsi') }}</textarea>
                 @error('deskripsi')
                     <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
                 @enderror
