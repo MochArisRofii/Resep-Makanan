@@ -12,7 +12,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('bahans', function (Blueprint $table) {
-            $table->text('deskripsi')->nullable(); // Tambahkan kolom deskripsi
+            //Menambahkan Kolom deksripsi dengan type text dan default null
+            $table->text('deskripsi')->nullable(); 
         });
     }
 

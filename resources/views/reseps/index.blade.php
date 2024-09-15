@@ -12,7 +12,6 @@
             overflow: hidden;
             animation: typing steps(40, end), blink-caret .75s step-end infinite;
         }
-
         @keyframes typing {
             from {
                 width: 0;
@@ -22,7 +21,6 @@
                 width: 100%;
             }
         }
-
         @keyframes blink-caret {
             from,
             to {
@@ -33,7 +31,6 @@
                 border-color: rgb(255, 255, 255);
             }
         }
-
         .dragging {
             opacity: 0.5;
             transform: rotate(5deg) scale(1.05);
@@ -53,8 +50,8 @@
             <a href="#" class="text-2xl font-bold">Masakan</a>
             <div>
                 <a href="{{ route('reseps.create') }}"
-                    class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition ease-in-out duration-300">Tambah
-                    Resep Baru</a>
+                    class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 
+                    transition ease-in-out duration-300">Tambah Resep Baru</a>
             </div>
         </div>
     </nav>

@@ -8,11 +8,14 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * 
      */
     public function up(): void
     {
         Schema::table('bahans', function (Blueprint $table) {
-            $table->integer('position')->nullable()->after('id');    
+            // Menambahkan kolom 'position' dengan tipe data integer,
+            // dapat bernilai null, dan ditempatkan setelah kolom 'id'
+            $table->integer('position')->nullable()->after('id');
         });
     }
 
@@ -22,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('bahans', function (Blueprint $table) {
-            $table->dropColumn('position');    
+            $table->dropColumn('position');
         });
     }
 };

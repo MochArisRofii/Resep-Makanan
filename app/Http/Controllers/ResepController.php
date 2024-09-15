@@ -58,6 +58,7 @@ class ResepController extends Controller
             'deskripsi' => $request->deskripsi, // Simpan deskripsi resep
             'photo' => $photoPath, // Simpan path foto ke database
         ]);
+    
 
         // Redirect ke halaman index reseps dengan pesan sukses
         return redirect()->route('reseps.index')->with('success', 'Resep Sudah Di Buat');
@@ -98,7 +99,9 @@ class ResepController extends Controller
         $request->validate([
             'name' => 'required', // Field 'name' harus diisi
             'deskripsi' => 'nullable', // Field 'deskripsi' boleh kosong
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi foto (boleh kosong, harus gambar, format jpeg, png, jpg, gif, ukuran maksimal 2MB)
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi foto (boleh kosong, 
+                                                                        // harus gambar, format jpeg, png, jpg, gif, 
+                                                                        // ukuran maksimal 2MB)
         ]);
 
         $data = $request->all(); // Mengambil semua data dari request

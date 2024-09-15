@@ -14,7 +14,9 @@ class BahanController extends Controller
      */
     public function index()
     {
+        // Mengambil semua data dari model Bahan
         $bahans = Bahan::all();
+        // Mengirim data $bahans ke view 'reseps.index'
         return view('reseps.index', compact('bahans'));
     }
 
@@ -29,19 +31,16 @@ class BahanController extends Controller
     // Menyimpan bahan baru
     public function store(Request $request)
     {
+        // Validasi input yang diterima dari request
         $request->validate([
             // Field name wajib diisi, harus berupa string, dan maksimal 255 karakter
             'name' => 'required|string|max:255',
-
             // Field 'deskripsi' wajib diisi dan harus berupa string
             'deskripsi' => 'require d|string',
-
             // Field 'quantity' wajib diisi dan harus berupa integer (bilangan bulat)
             'quantity' => 'required|integer',
-
             // Field 'unit' wajib diisi dan harus berupa string (misalnya "gram", "kg")
             'unit' => 'required|string',
-
             // Field 'resep_id' wajib diisi dan harus sesuai dengan id yang ada di tabel 'reseps'
             'resep_id' => 'required|exists:reseps,id',
         ]);
@@ -55,6 +54,7 @@ class BahanController extends Controller
 
     public function show(Bahan $bahan)
     {
+        // Mengembalikan Ke Halaman 'reseps.show'
         return view('reseps.show', compact('bahan'));
     }
 
