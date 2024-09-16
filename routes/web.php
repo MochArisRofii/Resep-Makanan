@@ -28,17 +28,20 @@ Route::get('/', [ResepController::class, 'index'])->name('home');
 
 // Rute CRUD untuk resep
 Route::resource('reseps', ResepController::class);
-// Route::get('bahans/{resep_id}', [ResepController::class, 'show'])->name('reseps.show');
+Route::get('bahans/{resep_id}', [ResepController::class, 'show'])->name('reseps.show');
 
 
-// // Rute CRUD untuk Bahan
-// Route::resource('bahans', BahanController::class);
-// Route::get('bahans/create/{resep_id}', [BahanController::class, 'create'])->name('bahans.create');
-// Route::post('bahans', [BahanController::class, 'store'])->name('bahans.store');
+// Rute CRUD untuk Bahan
+Route::resource('bahans', BahanController::class);
+
+// Mendefinisikan route GET untuk menampilkan formulir pembuatan bahan
+Route::get('bahans/create/{resep_id}', [BahanController::class, 'create'])->name('bahans.create');
+
+// Mendefinisikan route POST untuk menyimpan data bahan baru
+Route::post('bahans', [BahanController::class, 'store'])->name('bahans.store');
 
 
-// // Rute ini digunakan untuk menangani permintaan HTTP POST yang dikirim ke endpoint /bahans/update-position.
-// // Endpoint ini biasanya digunakan untuk memperbarui posisi bahan (misalnya, urutan atau posisi bahan dalam resep) di database.
-
-// Route::post('/bahans/update-position', [BahanController::class, 'updatePosition'])->name('bahans.updatePosition');
+// Rute ini digunakan untuk menangani permintaan HTTP POST yang dikirim ke endpoint /bahans/update-position.
+// Endpoint ini biasanya digunakan untuk memperbarui posisi bahan (misalnya, urutan atau posisi bahan dalam resep) di database.
+Route::post('/bahans/update-position', [BahanController::class, 'updatePosition'])->name('bahans.updatePosition');
 
