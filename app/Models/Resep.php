@@ -34,4 +34,5 @@ class Resep extends Model
         // "memiliki banyak" Bahan.
         return $this->hasMany(Bahan::class);
     }
+    
 }

@@ -16,13 +16,19 @@ class BahanController extends Controller
     {
         // Mengambil semua data dari model Bahan
         $bahans = Bahan::all();
+
+        // Jika permintaan adalah untuk API (JSON), kembalikan respons JSON
+        if (request()->expectsJson()) {
+            return response()->json($bahans);
+        }
+
         // Mengirim data $bahans ke view 'reseps.index'
         return view('reseps.index', compact('bahans'));
     }
 
     public function create($resep_id)
     {
-        /// Mencari Data Resep berdasarkan id jika tidak ketemu akan muncul respon 404 atau not found
+        // Mencari Data Resep berdasarkan id
         $resep = Resep::findOrFail($resep_id);
 
         return view('bahans.create', compact('resep'));
@@ -33,20 +39,24 @@ class BahanController extends Controller
     {
         // Validasi input yang diterima dari request
         $request->validate([
-            // Field name wajib diisi, harus berupa string, dan maksimal 255 karakter
             'name' => 'required|string|max:255',
-            // Field 'deskripsi' wajib diisi dan harus berupa string
-            'deskripsi' => 'require d|string',
-            // Field 'quantity' wajib diisi dan harus berupa integer (bilangan bulat)
+            'deskripsi' => 'required|string',
             'quantity' => 'required|integer',
-            // Field 'unit' wajib diisi dan harus berupa string (misalnya "gram", "kg")
             'unit' => 'required|string',
-            // Field 'resep_id' wajib diisi dan harus sesuai dengan id yang ada di tabel 'reseps'
             'resep_id' => 'required|exists:reseps,id',
         ]);
 
         // Menyimpan bahan baru
-        Bahan::create($request->all());
+        $bahan = Bahan::create($request->all());
+
+        // Jika permintaan adalah untuk API (JSON), kembalikan respons JSON
+        if ($request->expectsJson()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Bahan created successfully.',
+                'data' => $bahan
+            ]);
+        }
 
         // Redirect ke halaman detail resep setelah bahan berhasil ditambahkan
         return redirect()->route('reseps.show', $request->resep_id)->with('success', 'Bahan created successfully.');
@@ -54,6 +64,11 @@ class BahanController extends Controller
 
     public function show(Bahan $bahan)
     {
+        // Jika permintaan adalah untuk API (JSON), kembalikan respons JSON
+        if (request()->expectsJson()) {
+            return response()->json(data: $bahan);
+        }
+
         // Mengembalikan Ke Halaman 'reseps.show'
         return view('reseps.show', compact('bahan'));
     }
@@ -67,13 +82,19 @@ class BahanController extends Controller
     public function update(Request $request, Bahan $bahan)
     {
         $request->validate([
-            'name' => 'required', // Field 'name' wajib diisi
-            'quantity' => 'required|numeric', // Field 'quantity' wajib diisi dan harus berupa nilai numerik (bisa integer atau float)
-            'unit' => 'required', // Field 'unit' wajib diisi
-            'resep_id' => 'required|exists:reseps,id', // Validasi bahwa resep_id harus ada di tabel reseps
+            'name' => 'required|string|max:255',
+            'quantity' => 'required|integer',
+            'unit' => 'required|string',
+            'resep_id' => 'required|exists:reseps,id',
+            'position' => 'nullable|integer',
         ]);
 
-        $bahan->update($request->all()); // Mengupdate Bahan Menggunakan request all()
+        $bahan->update($request->all()); // Mengupdate Bahan
+
+        // Jika permintaan adalah untuk API (JSON), kembalikan respons JSON
+        if ($request->expectsJson()) {
+            return response()->json(['status' => 'success', 'message' => 'Bahan updated successfully.', 'data' => $bahan]);
+        }
 
         return redirect()->route('reseps.show', $bahan->resep_id)->with('success', 'Bahan updated successfully.');
     }
@@ -81,9 +102,14 @@ class BahanController extends Controller
     public function destroy(Bahan $bahan)
     {
         $resepId = $bahan->resep_id; // Ambil ID resep yang terkait dengan bahan
-        $bahan->delete(); // Menghapus Bahan Menggunakan Delete
+        $bahan->delete(); // Menghapus Bahan
 
-        // Meredirect ke Halaman Resep.Show setelah Menghapus Suatu Bahan
+        // Jika permintaan adalah untuk API (JSON), kembalikan respons JSON
+        if (request()->expectsJson()) {
+            return response()->json(['status' => 'success', 'message' => 'Bahan deleted successfully.']);
+        }
+
+        // Redirect ke halaman resep setelah menghapus bahan
         return redirect()->route('reseps.show', $resepId)->with('success', 'Bahan deleted successfully.');
     }
 
