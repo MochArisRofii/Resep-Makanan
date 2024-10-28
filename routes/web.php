@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BahanController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\ResepController;
 use App\Http\Controllers\UserController;
@@ -45,3 +46,5 @@ Route::post('bahans', [BahanController::class, 'store'])->name('bahans.store');
 // Endpoint ini biasanya digunakan untuk memperbarui posisi bahan (misalnya, urutan atau posisi bahan dalam resep) di database.
 Route::post('/bahans/update-position', [BahanController::class, 'updatePosition'])->name('bahans.updatePosition');
 
+
+    

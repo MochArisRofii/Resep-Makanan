@@ -28,7 +28,7 @@ Route::prefix('reseps')->group(function () {
 Route::prefix('bahans')->group(function () {
     Route::get('/', [BahanController::class, 'index']); // GET semua bahan
     Route::post('/', [BahanController::class, 'store']); // POST untuk membuat bahan baru
-    Route::get('/{bahan}', action: [BahanController::class, 'show']); // GET detail bahan
+    Route::get('/{bahan}', [BahanController::class, 'show']); // GET detail bahan
     Route::put('/{bahan}', [BahanController::class, 'update']); // PUT untuk update bahan
     Route::delete('/{bahan}', [BahanController::class, 'destroy']); // DELETE untuk menghapus bahan
     Route::put('/update-position', [BahanController::class, 'updatePosition']); // Update posisi bahan
