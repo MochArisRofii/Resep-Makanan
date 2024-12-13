@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BahanController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\PostController;
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // Halaman depan yang menampilkan daftar resep
-Route::get('/', [ResepController::class, 'index'])->name('home');
+Route::get('/', [ResepController::class, 'index'])->name('home')->middleware('auth');
 
 
 // Rute CRUD untuk resep
@@ -45,6 +46,15 @@ Route::post('bahans', [BahanController::class, 'store'])->name('bahans.store');
 // Rute ini digunakan untuk menangani permintaan HTTP POST yang dikirim ke endpoint /bahans/update-position.
 // Endpoint ini biasanya digunakan untuk memperbarui posisi bahan (misalnya, urutan atau posisi bahan dalam resep) di database.
 Route::post('/bahans/update-position', [BahanController::class, 'updatePosition'])->name('bahans.updatePosition');
+
+// Halaman login
+Route::get('login', [AuthController::class, 'loginForm'])->name('login');
+
+// Proses login
+Route::post('login', [AuthController::class, 'login'])->name('login.submit');
+
+// Proses logout
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 
     

@@ -53,8 +53,16 @@
                     class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 
                     transition ease-in-out duration-300">Tambah Resep Baru</a>
             </div>
+            
         </div>
     </nav>
+    <form action="{{ route('logout') }}" method="POST" class="inline">
+        @csrf
+        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+            Logout
+        </button>
+    </form>
+    
 
     <!-- Main Content -->
     <div class="container mx-auto p-6">
