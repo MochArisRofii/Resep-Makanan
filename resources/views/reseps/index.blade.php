@@ -12,6 +12,7 @@
             overflow: hidden;
             animation: typing steps(40, end), blink-caret .75s step-end infinite;
         }
+
         @keyframes typing {
             from {
                 width: 0;
@@ -21,6 +22,7 @@
                 width: 100%;
             }
         }
+
         @keyframes blink-caret {
             from,
             to {
@@ -31,6 +33,7 @@
                 border-color: rgb(255, 255, 255);
             }
         }
+
         .dragging {
             opacity: 0.5;
             transform: rotate(5deg) scale(1.05);
@@ -48,21 +51,21 @@
     <nav class="bg-blue-600 text-white p-4 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
             <a href="#" class="text-2xl font-bold">Masakan</a>
-            <div>
+            <div class="flex items-center space-x-4">
                 <a href="{{ route('reseps.create') }}"
-                    class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 
-                    transition ease-in-out duration-300">Tambah Resep Baru</a>
+                    class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition ease-in-out duration-300">Tambah Resep Baru</a>
+
+                <!-- Logout Button -->
+                <form action="{{ route('logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit"
+                        class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition ease-in-out duration-300">
+                        Logout
+                    </button>
+                </form>
             </div>
-            
         </div>
     </nav>
-    <form action="{{ route('logout') }}" method="POST" class="inline">
-        @csrf
-        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
-            Logout
-        </button>
-    </form>
-    
 
     <!-- Main Content -->
     <div class="container mx-auto p-6">
